@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservation</title>
+</head>
+<body>
+    <div>
+        <h2>Reservation</h2>
+        <h5>ROOM ID: {{ room.id}}</h5>
+        <hr>
+        <p>STANDARD: {{ room.standard }}</p>
+        <p>PRICE: ${{ room.price }}</p>
+        <p>OCCUPANTS: {{ room.occupants }}</p>
+        <hr>
+        
+        <div>
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button>Submit</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+</head>
+<body>
+    <h2>Welcome to Django Web Applicaion!!!</h2>
+    <h2>AlvinHotel</h2>
+
+    <div>
+        {% for msg in messages %}
+            <p>{{ msg }}</p>
+        {% endfor %}
+
+        {% for room in rooms %}
+            <div>
+                <h5>ROOM: {{ room.id }}</h5>
+                <p>STANDARD: {{ room.standard }}</p>
+                <span>PRICE: ${{ room.price }}</span>
+                <span>OCCUPANTS: {{ room.occupants }}</span>
+
+                <br><br>
+                <a href="/reservation/{{ room.id }}">Book</a>
+            </div>
+            <hr>
+        {% endfor %}
+    </div>
+</body>
+</html>
