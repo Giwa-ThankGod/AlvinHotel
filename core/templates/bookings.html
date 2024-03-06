@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookings</title>
+</head>
+<body>
+    <h2>Bookings</h2>
+
+    <div>
+        {% for msg in messages %}
+            <p>{{ msg }}</p>
+        {% endfor %}
+
+        {% for booking in bookings %}
+            <div>
+                <h5>ROOM: {{ booking.room.id }}</h5>
+                <p>STANDARD: {{ booking.room.standard }}</p>
+
+                <p>DURATION: {{ booking.duration }} {{ booking.interval }}</p>
+                <p>DATE {{ booking.datetime }}</p>
+
+                <br><br>
+                {% if booking.room.checkout %}
+                    <a href="{% url 'update-booking' booking.id %}">Update Booking</a>
+                {% endif %}
+
+                {% if booking.room.available %}
+                    <a href="{% url 'delete-booking' booking.id %}">Delete Booking</a>
+                {% endif %}
+            </div>
+            <hr>
+        {% endfor %}
+    </div>
+</body>
+</html>

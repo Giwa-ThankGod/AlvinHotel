@@ -7,7 +7,7 @@ from django.contrib import messages
 from core.models import Room, Reservation
 
 # Import our built form.
-from core.forms import ReservationForm
+from core.forms import ReservationForm, UpdateReservationForm
 
 # The request parameter helps django recognize this function as a view/page. 
 def index(request):
@@ -52,9 +52,46 @@ def reservation(request, room_id):
         )
 
         # Update the room checkout/availability.
-        room.checkout = False
+        room.available = False
         room.save()
 
         messages.success(request, f'Reservation for Room with ID: {room.id} was successfull!!!')
 
         return redirect('index')
+    
+def bookings(request):
+    # Retrieves all reservations from the database.
+    bookings = Reservation.objects.all()
+
+    # Sorts the reservations with the datetime field with the current reservation as the first.
+    bookings = bookings.order_by('-datetime')
+
+    context = {'bookings': bookings}
+
+    return render(request, 'bookings.html', context)
+
+def update_booking(request, booking_id):
+    booking = Reservation.objects.get(id = booking_id)
+
+    if request.method == 'GET':
+        booking_form = UpdateReservationForm(instance=booking)
+
+        context = {'booking': booking, 'form': booking_form}
+        return render(request, "update-booking.html", context)
+    elif request.method == 'POST':
+        form = UpdateReservationForm(request.POST, instance=booking)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Booking Updated Successfully!!!')
+        
+        return redirect('bookings')
+
+def delete_booking(request, booking_id):
+    booking = Reservation.objects.get(id = booking_id)
+
+    # Permanently deletes the item from the database.
+    booking.delete()
+    messages.success(request, 'Booking Deleted Successfully!!!')
+
+    return redirect('bookings')
