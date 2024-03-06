@@ -12,6 +12,7 @@ class Room(models.Model):
     standard = models.CharField(max_length=50, choices=standard_choices)
     price = models.FloatField()
     occupants = models.IntegerField(default=0)
+    available = models.BooleanField(default=True)
     checkout = models.BooleanField(default=True)
 
     # Changes the default name Displayed on each object on the admin panel
